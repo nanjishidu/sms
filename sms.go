@@ -2,10 +2,10 @@ package sms
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/aliyun/alibaba-cloud-sdk-go/sdk"
 	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/requests"
-	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/responses"
 )
 
 type AlibabaSendRequest struct {
@@ -78,10 +78,9 @@ func (m *AlibabaSendRequest) AlibabaSend(apiName, signName, templateCode, phoneN
 		request.QueryParams["SignNameJson"] = signName           //[{name:\"然宇信息\"},{name:\"然宇信息\"}]
 		request.QueryParams["TemplateParamJson"] = templateParam //"[{name:\"nanjishidu\"},{name:\"nanjishidu\"}]"
 	} else {
-
+		return nil, fmt.Errorf("invalid apiName:%s", apiName)
 	}
-	var response *responses.CommonResponse
-	response, err = m.AlibabaSendClient.ProcessCommonRequest(request)
+	response, err := m.AlibabaSendClient.ProcessCommonRequest(request)
 	if err != nil {
 		return nil, err
 	}
